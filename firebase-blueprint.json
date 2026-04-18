@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user preferences and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "operator", "client"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "NeuralTask": {
+      "title": "Neural Task",
+      "description": "A task or interaction with the AI system",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "type": { "type": "string", "enum": ["chat", "image_gen", "voice", "analysis"] },
+        "input": { "type": "string" },
+        "output": { "type": "string" },
+        "metadata": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "type", "createdAt"]
+    },
+    "AgentFeedback": {
+      "title": "Agent Feedback",
+      "description": "User feedback on agent performance",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "agentId": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "agentId", "rating", "createdAt"]
+    },
+    "BrandPackFeedback": {
+      "title": "Brand Pack Feedback",
+      "description": "Customer feedback on delivered brand packs and logos",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "logoRating": { "type": "number", "description": "1-5 rating of the logo design" },
+        "overallSatisfaction": { "type": "number", "description": "1-5 overall satisfaction" },
+        "comments": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "analyzed"] },
+        "analysis": { "type": "object", "description": "Output from BF_INSIGHTS_ANALYST" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "logoRating", "overallSatisfaction", "createdAt"]
+    },
+    "AgentConfig": {
+      "title": "Agent Configuration",
+      "description": "Dynamic rules and prompt enhancements for agents",
+      "type": "object",
+      "properties": {
+        "agentId": { "type": "string" },
+        "dynamicRules": { "type": "array", "items": { "type": "string" } },
+        "trainingData": { "type": "array", "items": { "type": "object" } },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["agentId", "lastUpdated"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/tasks/{taskId}": {
+      "schema": "NeuralTask",
+      "description": "Log of AI interactions"
+    },
+    "/feedback/{feedbackId}": {
+      "schema": "AgentFeedback",
+      "description": "User feedback on agent performance"
+    },
+    "/brand_feedback/{feedbackId}": {
+      "schema": "BrandPackFeedback",
+      "description": "Customer feedback on brand packs"
+    },
+    "/agent_configs/{agentId}": {
+      "schema": "AgentConfig",
+      "description": "Dynamic configuration and rules for agents"
+    }
+  }
+}

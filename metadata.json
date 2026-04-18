@@ -1,0 +1,5 @@
+{
+  "name": "STRMFRNT Agent Dashboard",
+  "description": "A dashboard to visualize and manage the STRMFRNT Agentic Side Hustle System, including the new QA_AGENT for BrandForge deliverables.",
+  "requestFramePermissions": []
+}
