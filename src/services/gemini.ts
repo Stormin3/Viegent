@@ -103,7 +103,7 @@ export async function getMapsGrounding(query: string, location?: { latitude: num
  */
 export async function generateImagePro(prompt: string, size: "1K" | "2K" | "4K" = "1K") {
   await checkProApiKey();
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || API_KEY });
   const response = await ai.models.generateContent({
     model: "gemini-3-pro-image-preview",
     contents: { parts: [{ text: prompt }] },
